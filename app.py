@@ -68,7 +68,7 @@ with tab3:
 # --- SIDEBAR & LEGAL DISCLAIMER ---
 st.sidebar.title("About the Simulator")
 st.sidebar.info(
-    "Developed by **[Tu Nombre/LinkedIn]** as a Data Science portfolio project."
+    "Developed by **Lucas Rodriguez Saa** as a Data Science portfolio project."
 )
 
 st.sidebar.markdown("---")
