@@ -27,12 +27,16 @@ with tab1:
     st.header("The Oracle: Who will lift the trophy?")
     st.markdown("We simulated the entire tournament **10,000 times**. Here are the mathematical probabilities:")
     
-    # Mostramos el DataFrame interactivo
+# Automatically identify which columns are numbers and which are text
+    numeric_cols = df_probs.select_dtypes(include=['number']).columns
+    
+    # Display the interactive dataframe, formatting only the numeric columns
     st.dataframe(
-        df_probs.style.format("{:.1f}%"), 
+        df_probs.style.format("{:.1f}%", subset=numeric_cols), 
         use_container_width=True,
         height=600
     )
+
 
 with tab2:
     st.header("Match Predictor")
