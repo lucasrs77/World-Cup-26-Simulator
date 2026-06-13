@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from scipy.stats import poisson
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(page_title="World Cup 2026 Simulator", page_icon="🏆", layout="wide")
