@@ -310,4 +310,118 @@ with tab3:
         use_container_width=True
     )
 
+
+# ==============================================================================
+# TAB 4: MATCH PROFILER (POISSON HEATMAP)
+# ==============================================================================
+with tab4:
+    st.subheader("Match Profiler: Bivariate Poisson Distribution")
+    st.write("A purely statistical view of match dynamics. By calculating the expected goals (xG) based on historical strength and applying a Dixon-Coles adjustment for low-scoring matches, we map the exact probability of every possible scoreline.")
+
+    # 1. Selectores de Equipos
+    teams_list = sorted(df_strengths['Team'].unique())
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        team_a = st.selectbox("Select Team A (Home):", teams_list, index=teams_list.index('Argentina') if 'Argentina' in teams_list else 0)
+    with col2:
+        # Filtramos para que no pueda elegir el mismo equipo de ambos lados
+        available_team_b = [t for t in teams_list if t != team_a]
+        team_b = st.selectbox("Select Team B (Away):", available_team_b, index=available_team_b.index('France') if 'France' in available_team_b else 0)
+
+    st.divider()
+
+    # 2. Extracción de Fuerzas y Cálculo de xG (Lambdas)
+    # Usamos las métricas históricas puras que exportamos desde Colab
+    stats_a = df_strengths[df_strengths['Team'] == team_a].iloc[0]
+    stats_b = df_strengths[df_strengths['Team'] == team_b].iloc[0]
+
+    GLOBAL_AVG_GOALS = 1.45 # Constante global de goles del Mundial
+
+    # Fórmula: Promedio Global * Ataque Propio * Defensa Rival
+    lambda_a = GLOBAL_AVG_GOALS * stats_a['Historical_Attack'] * stats_b['Historical_Defense']
+    lambda_b = GLOBAL_AVG_GOALS * stats_b['Historical_Attack'] * stats_a['Historical_Defense']
+
+    # 3. Construcción de la Matriz de Poisson (0 a 5 goles para no saturar el gráfico)
+    max_goals = 5
+    goals = np.arange(max_goals + 1)
+    
+    prob_a = poisson.pmf(goals, lambda_a)
+    prob_b = poisson.pmf(goals, lambda_b)
+    prob_matrix = np.outer(prob_a, prob_b)
+
+    # Ajuste Dixon-Coles (rho = 0.05) para deflactar 0-0 y 1-1
+    rho = 0.05
+    prob_matrix[0, 0] *= (1 - lambda_a * lambda_b * rho)
+    prob_matrix[0, 1] *= (1 + lambda_a * rho)
+    prob_matrix[1, 0] *= (1 + lambda_b * rho)
+    prob_matrix[1, 1] *= (1 - rho)
+    
+    prob_matrix = np.maximum(0, prob_matrix) # Evitar probabilidades negativas
+    prob_matrix /= prob_matrix.sum() # Renormalizar a 100%
+
+    # 4. Visualización: El Mapa de Calor (Heatmap)
+    col_heat, col_stats = st.columns([2, 1])
+
+    with col_heat:
+        st.markdown(f"### 🌡️ Scoreline Probability Matrix")
+        
+        # Formatear la matriz para que muestre porcentajes legibles
+        text_matrix = [[f"{val*100:.1f}%" for val in row] for row in prob_matrix]
+
+        fig_heat = go.Figure(data=go.Heatmap(
+            z=prob_matrix,
+            x=[f"{team_b} {i}" for i in range(max_goals + 1)],
+            y=[f"{team_a} {i}" for i in range(max_goals + 1)],
+            text=text_matrix,
+            texttemplate="%{text}",
+            colorscale='Reds',
+            hoverinfo="text",
+            showscale=False
+        ))
+        
+        fig_heat.update_layout(
+            xaxis_title=f"Goals {team_b}",
+            yaxis_title=f"Goals {team_a}",
+            yaxis_autorange='reversed', # Para que el 0-0 quede arriba a la izquierda como es estándar
+            template="plotly_white",
+            margin=dict(l=20, r=20, t=30, b=20)
+        )
+        
+        st.plotly_chart(fig_heat, use_container_width=True)
+
+    # 5. KPIs y Extracción de los Top Resultados
+    with col_stats:
+        st.markdown("### 🎯 Expected Goals (xG)")
+        st.metric(label=f"{team_a} xG", value=f"{lambda_a:.2f}")
+        st.metric(label=f"{team_b} xG", value=f"{lambda_b:.2f}")
+        
+        st.divider()
+        
+        # Aplanar la matriz para buscar los extremos
+        flat_probs = prob_matrix.flatten()
+        sorted_indices = np.argsort(flat_probs)[::-1] # Ordenar de mayor a menor probabilidad
+        
+        st.markdown("### 🔝 Most Likely Scores")
+        for i in range(5):
+            idx = sorted_indices[i]
+            g_a, g_b = np.unravel_index(idx, prob_matrix.shape)
+            prob_val = prob_matrix[g_a, g_b] * 100
+            st.markdown(f"**{g_a} - {g_b}** ➔ {prob_val:.1f}%")
+            
+        st.divider()
+        
+        st.markdown("### 🦢 Statistical Black Swans")
+        st.caption("Highly unlikely, yet mathematically possible (< 0.5%)")
+        black_swans_count = 0
+        
+        # Recorremos desde el menos probable hacia arriba
+        for i in range(len(flat_probs)-1, -1, -1):
+            idx = sorted_indices[i]
+            g_a, g_b = np.unravel_index(idx, prob_matrix.shape)
+            prob_val = prob_matrix[g_a, g_b] * 100
+            if 0.0 < prob_val < 0.5 and black_swans_count < 5:
+                st.markdown(f"**{g_a} - {g_b}** ➔ {prob_val:.2f}%")
+                black_swans_count += 1
+
     
