@@ -482,15 +482,16 @@ with tab5:
     df_tiers = df_probs[['Win World Cup']].reset_index().rename(columns={'index': 'Team'})
     
     # Función para categorizar los equipos según su probabilidad de salir campeón
+
     def assign_tier_category(prob):
-        if prob >= 10.0:
-            return "Tier 1: Title Contenders (>=10%)"
-        elif prob >= 3.0:
-            return "Tier 2: Dark Horses (3% - 10%)"
-        elif prob >= 0.5:
-            return "Tier 3: Knockout Hopefuls (0.5% - 3%)"
-        else:
-            return "Tier 4: Long Shots (<0.5%)"
+        if prob >= 6.5: # El nuevo corte de élite absoluta
+            return "Tier 1: Heavy Favorites (>= 6.5%)"
+        elif prob >= 2.5: # Equipos fuertes que si tienen un buen cruce llegan
+            return "Tier 2: Strong Contenders (2.5% - 6.5%)"
+        elif prob >= 0.5: # Pasan de fase pero chocan con el muro
+            return "Tier 3: Dark Horses (0.5% - 2.5%)"
+        else: # Los turistas
+            return "Tier 4: The Underdogs (< 0.5%)"
             
     df_tiers['Tier'] = df_tiers['Win World Cup'].apply(assign_tier_category)
     
