@@ -205,48 +205,73 @@ with tab2:
 # TAB 3: THE ALGORITHM LAB (DETERMINISTIC ENGINE)
 # ==============================================================================
 with tab3:
-    st.subheader("The Algorithm Lab: Deterministic Power Rankings")
-    st.write("Play God with the simulation variables. Adjust strategic weights and environmental factors to see how the mathematical hierarchy of the tournament shifts in real-time.")
+    st.subheader("The Algorithm Lab: Custom Strategic Projections")
+    st.write("Play God with the model parameters. Adjust the weights of historical performance versus financial power, modify tactical focus, and apply environmental boosts to recalculate the global tournament hierarchy in real-time.")
 
+    # 1. CONTROLES DEL LABORATORIO (SLIDERS)
     col_a, col_b = st.columns(2)
     
     with col_a:
+        st.markdown("### 📊 Core Weights")
+        # Slider principal: Historia vs Billetera
+        history_weight = st.slider(
+            "Historical Data Weight (%)", 
+            min_value=0.0, max_value=1.0, value=0.60, step=0.05,
+            help="At 100%, squad market value is ignored. At 0%, only team finances matter."
+        )
+        financial_weight = 1.0 - history_weight
+        
         st.markdown("### ⚙️ Tactical Philosophy")
         off_weight = st.slider(
             "Offensive Importance Weight (%)", 
             min_value=0.0, max_value=1.0, value=0.50, step=0.05,
-            help="At 100%, defense is ignored. At 0%, attack is ignored."
+            help="Balances the importance of scoring capability versus defensive solidity in the final score."
         )
         def_weight = 1.0 - off_weight
-        
-        st.markdown("### 🎲 The Chaos Factor")
-        chaos_factor = st.slider(
-            "Underdog Competitiveness Multiplier", 
-            min_value=1.0, max_value=2.0, value=1.0, step=0.1,
-            help="Values > 1.0 mathematically compress the skill gap, buffing weaker teams and simulating a highly volatile tournament."
-        )
 
     with col_b:
         st.markdown("### 🌎 Environmental Boosts")
         americas_boost = st.slider(
             "Americas Home Advantage Boost (%)", 
             min_value=0.0, max_value=20.0, value=5.0, step=1.0,
-            help="Stat multiplier applied to CONMEBOL/CONCACAF teams due to climate and travel familiarity."
+            help="Stat multiplier applied to CONMEBOL and CONCACAF teams due to climate, travel, and local support."
         )
         
-        # Lista hardcodeada de equipos americanos más probables para aplicar el boost rápido
+        st.markdown("### 🎲 The Chaos Factor")
+        chaos_factor = st.slider(
+            "Underdog Competitiveness Multiplier", 
+            min_value=1.0, max_value=2.0, value=1.0, step=0.1,
+            help="Values > 1.0 mathematically compress the skill gap, buffing weaker teams and simulating high volatility."
+        )
+        
+        # Lista de referencia para el boost regional
         americas_teams = ['Argentina', 'Brazil', 'Uruguay', 'Colombia', 'Ecuador', 
                           'USA', 'Mexico', 'Canada', 'Peru', 'Chile', 'Venezuela', 
                           'Paraguay', 'Costa Rica', 'Panama', 'Jamaica']
     
     st.divider()
 
-    # 1. Calculamos el Power Score base
+    # 2. MOTOR DE SIMULACIÓN DETERMINÍSTICO EN VIVO
     df_lab = df_strengths.copy()
-    df_lab['Inverted_Defense'] = 1.0 / df_lab['Adjusted_Defense'].replace(0, 0.01)
-    df_lab['Base_Power'] = (df_lab['Adjusted_Attack'] * off_weight) + (df_lab['Inverted_Defense'] * def_weight)
     
-    # 2. Aplicamos el Boost de Localía (Americas)
+    # Normalizamos el Market Value a una escala similar a las strengths (0.5 a 2.5) para poder mezclarlos
+    # Aplicamos raíz cuadrada (the Nate Silver approach) para evitar que las brechas de dinero destruyan la lógica
+    df_lab['Financial_Score'] = np.sqrt(df_lab['Market_Value'] / df_lab['Market_Value'].mean())
+    
+    # Calculamos el Ataque y Defensa dinámico mezclando Historia y Billetera
+    df_lab['Dynamic_Attack'] = (df_lab['Historical_Attack'] * history_weight) + (df_lab['Financial_Score'] * financial_weight)
+    
+    # Para la defensa, como número más bajo es mejor, el score financiero resta vulnerabilidad
+    df_lab['Dynamic_Defense'] = (df_lab['Historical_Defense'] * history_weight) + ((2.0 - df_lab['Financial_Score']) * financial_weight)
+    df_lab['Dynamic_Defense'] = df_lab['Dynamic_Defense'].clip(lower=0.1) # Evitar que baje de cero
+    
+    # Invertimos la defensa para el Power Score final (menor defensa = mayor poder)
+    df_lab['Inverted_Defense'] = 1.0 / df_lab['Dynamic_Defense']
+    
+    # Combinamos según la filosofía táctica (Ataque vs Defensa)
+    df_lab['Base_Power'] = (df_lab['Dynamic_Attack'] * off_weight) + (df_lab['Inverted_Defense'] * def_weight)
+    
+    # Aplicamos el Boost de las Américas
     boost_multiplier = 1.0 + (americas_boost / 100.0)
     df_lab['Power_Score'] = np.where(
         df_lab['Team'].isin(americas_teams), 
@@ -254,24 +279,35 @@ with tab3:
         df_lab['Base_Power']
     )
     
-    # 3. Aplicamos el Factor Caos (Raíz matemática para comprimir la brecha)
-    # Ejemplo: Si caos es 2.0, aplicamos raíz cuadrada. Los números altos bajan más que los bajos.
+    # Aplicamos el Factor Caos (Comprimir la brecha de talento)
     df_lab['Power_Score'] = df_lab['Power_Score'] ** (1.0 / chaos_factor)
     
-    # Limpiamos y ordenamos el Top 10
+    # Ordenamos el ranking completo
     df_lab = df_lab.sort_values('Power_Score', ascending=False).reset_index(drop=True)
-    df_lab.index += 1 
+    df_lab.index += 1 # El ranking arranca en 1
     
-    # Visualización Corporativa
-    st.markdown(f"### 🏆 Top 10 Adjusted Power Rankings")
+    # 3. CONTROL DE VISUALIZACIÓN DINÁMICO (SELECTOR DE CANTIDAD DE EQUIPOS)
+    st.markdown("### 🏆 Adjusted Power Rankings")
     
+    max_teams_to_show = st.slider(
+        "Select number of teams to display in the ranking:", 
+        min_value=5, 
+        max_value=48, 
+        value=15, 
+        step=1
+    )
+    
+    # Renderizado de la tabla BI corporativa
     st.dataframe(
-        df_lab[['Team', 'Power_Score']].head(10)
+        df_lab[['Team', 'Dynamic_Attack', 'Dynamic_Defense', 'Power_Score']].head(max_teams_to_show)
         .style
-        .format({'Power_Score': "{:.3f}"})
+        .format({
+            'Dynamic_Attack': "{:.2f}", 
+            'Dynamic_Defense': "{:.2f}", 
+            'Power_Score': "{:.3f}"
+        })
         .background_gradient(cmap='Greens', subset=['Power_Score']),
         use_container_width=True
     )
-
 
     
