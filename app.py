@@ -51,11 +51,12 @@ except Exception as e:
 # ==============================================================================
 # 2. ESTRUCTURA DE PESTAÑAS (TABS)
 # ==============================================================================
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "📉 Survival Analytics", 
     "🔥 Group Volatility", 
     "🧪 The Algorithm Lab", 
-    "📊 Match Profiler"
+    "📊 Match Profiler",
+    "🔍 Exploratory Data Analysis (EDA)"
 ])
 
 
@@ -411,4 +412,102 @@ with tab4:
                 st.markdown(f"**{g_a} - {g_b}** ➔ {prob_val:.2f}%")
                 black_swans_count += 1
 
+
+
+# ==============================================================================
+# TAB 5: EXPLORATORY DATA ANALYSIS (EDA)
+# ==============================================================================
+with tab5:
+    st.subheader("Exploratory Data Analysis & Market Landscape")
+    st.write("Understand the baseline features driving the simulation engine: historical team strengths, squad market values, and how the model stratifies contenders into tier hierarchies.")
+
+    # --------------------------------------------------------------------------
+    # VISUALIZACIÓN 1: CUADRANTE MÁGICO TÁCTICO (SCATTER PLOT)
+    # --------------------------------------------------------------------------
+    st.markdown("### 🗺️ Tactical Strength Quadrants")
+    st.write("This space maps offensive capability against defensive solidity. The size of each bubble represents the squad's Market Value in millions.")
     
+    df_scatter = df_strengths.copy()
+    
+    # Calculamos las medias para trazar las líneas de los cuadrantes
+    mean_att = df_scatter['Historical_Attack'].mean()
+    mean_def = df_scatter['Historical_Defense'].mean()
+    
+    # Construcción del Scatter Plot con Plotly
+    fig_scatter = px.scatter(
+        df_scatter,
+        x="Historical_Attack",
+        y="Historical_Defense",
+        size="Market_Value",
+        hover_name="Team",
+        color="Historical_Attack", # Degradado estético basado en ataque
+        color_continuous_scale="RdYlGn_r", # Rojo a verde invertido (para mejor visualización)
+        title="Team Strength Profile vs Market Value",
+        labels={
+            "Historical_Attack": "Historical Attack Strength (Higher = Better)",
+            "Historical_Defense": "Historical Defense Strength (Lower = Better)"
+        },
+        template="plotly_white"
+    )
+    
+    # REGLA DE ORO DE BI: Invertir el eje Y de defensa porque "número más bajo es mejor"
+    # De esta forma, "Arriba a la derecha" siempre es el cuadrante de élite.
+    fig_scatter.update_yaxis(autorange="reversed")
+    
+    # Añadir las líneas punteadas que dividen los 4 cuadrantes tácticos
+    fig_scatter.add_vline(x=mean_att, line_width=1.5, line_dash="dash", line_color="gray")
+    fig_scatter.add_hline(y=mean_def, line_width=1.5, line_dash="dash", line_color="gray")
+    
+    # Quitar la barra de color lateral para mantener el look corporativo limpio
+    fig_scatter.update_layout(coloraxis_showscale=False)
+    
+    st.plotly_chart(fig_scatter, use_container_width=True)
+    
+    # Explicativo técnico de los cuadrantes en formato corporativo
+    col_ed1, col_ed2, col_ed3, col_ed4 = st.columns(4)
+    col_ed1.info("**Upper Right: Elite**\\nHigh scoring power combined with a highly compact defense.")
+    col_ed2.warning("**Lower Right: Attacking Focus**\\nHigh scoring metrics but structurally vulnerable at the back.")
+    col_ed3.success("**Upper Left: Defensive Wall**\\nImpenetrable defensive setup but lacks clinical finishing.")
+    col_ed4.error("**Lower Left: Underdogs**\\nSub-average baseline metrics across both phases.")
+    
+    st.divider()
+
+    # --------------------------------------------------------------------------
+    # VISUALIZACIÓN 2: TIER LIST COMPETITIVA (TREEMAP)
+    # --------------------------------------------------------------------------
+    st.markdown("### 👑 Tournament Tier Hierarchy")
+    st.write("Instead of looking at raw singular percentages, this Treemap segments the 48 nations into distinct competitive tiers based on their objective probability of winning the World Cup.")
+    
+    # Procesamos df_probs para armar los Tiers
+    df_tiers = df_probs[['Win World Cup']].reset_index().rename(columns={'index': 'Team'})
+    
+    # Función para categorizar los equipos según su probabilidad de salir campeón
+    def assign_tier_category(prob):
+        if prob >= 10.0:
+            return "Tier 1: Title Contenders (>=10%)"
+        elif prob >= 3.0:
+            return "Tier 2: Dark Horses (3% - 10%)"
+        elif prob >= 0.5:
+            return "Tier 3: Knockout Hopefuls (0.5% - 3%)"
+        else:
+            return "Tier 4: Long Shots (<0.5%)"
+            
+    df_tiers['Tier'] = df_tiers['Win World Cup'].apply(assign_tier_category)
+    
+    # Construcción del Treemap interactivo
+    fig_tree = px.treemap(
+        df_tiers,
+        path=['Tier', 'Team'], # Define la jerarquía: primero agrupa por Tier, adentro muestra Equipos
+        values='Win World Cup',
+        color='Win World Cup',
+        color_continuous_scale='Blues',
+        title="Contenders Stratification Matrix",
+        labels={'Win World Cup': 'Chances of Winning (%)'}
+    )
+    
+    fig_tree.update_layout(
+        margin=dict(t=30, l=10, r=10, b=10),
+        template="plotly_white"
+    )
+    
+    st.plotly_chart(fig_tree, use_container_width=True)
