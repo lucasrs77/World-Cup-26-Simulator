@@ -15,13 +15,26 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS
+# Custom CSS
 st.markdown("""
     <style>
-    .stTabs [data-baseweb="tab-list"] { gap: 20px; }
-    .stTabs [data-baseweb="tab"] { height: 50px; white-space: pre-wrap; font-weight: bold; }
+    .stTabs [data-baseweb="tab-list"] { gap: 12px; }
+    .stTabs [data-baseweb="tab"] { 
+        height: 48px; 
+        font-weight: bold; 
+        border-radius: 4px 4px 0px 0px;
+    }
+    div[data-testid="stMetricValue"] { font-size: 24px; font-weight: bold; }
     </style>
 """, unsafe_allow_html=True)
+
+# Estilos CSS
+#st.markdown("""
+#    <style>
+#    .stTabs [data-baseweb="tab-list"] { gap: 20px; }
+#    .stTabs [data-baseweb="tab"] { height: 50px; white-space: pre-wrap; font-weight: bold; }
+#    </style>
+#""", unsafe_allow_html=True)
 
 st.title("⚽ FIFA World Cup 2026: Strategic Data Lab")
 st.markdown("""
