@@ -175,7 +175,8 @@ with tab2:
     )
     
     st.plotly_chart(fig_vol, use_container_width=True)
-    
+
+    '''
     # 3. Inspector de Grupos Corregido (Sin Score y con Decimales formateados)
     st.markdown("### 🔍 Inspect Group Matches")
     st.markdown("*Note: This table strips away the noise and displays pure win/draw/loss probability distributions. Groups saturated with deep red across multiple matches indicate a high-variance 'Group of Death' scenario.*")
@@ -198,3 +199,58 @@ with tab2:
         use_container_width=True,
         hide_index=True
     )
+    '''
+
+# ==============================================================================
+# TAB 3: THE ALGORITHM LAB (DETERMINISTIC ENGINE)
+# ==============================================================================
+with tab3:
+    st.subheader("The Algorithm Lab: Deterministic Power Rankings")
+    st.write("Football philosophy debate: What wins World Cups, an elite attack or an impenetrable defense? Adjust the strategic weights below to recalculate the deterministic 'Power Score' for each nation in real-time.")
+
+    # 1. Controles de Laboratorio (Sliders)
+    st.markdown("### ⚙️ Strategic Weighting")
+    
+    # El usuario elige cuánto pesa el ataque. La defensa es el resto (1 - ataque)
+    off_weight = st.slider("Offensive Importance Weight (%)", min_value=0.0, max_value=1.0, value=0.50, step=0.05)
+    def_weight = 1.0 - off_weight
+    
+    st.markdown(f"**Current Algorithm Philosophy:** {off_weight*100:.0f}% Attack Focus / {def_weight*100:.0f}% Defense Focus")
+    st.divider()
+
+    # 2. Motor Determinístico en Vivo
+    # Formula: Power = (Attack * W_off) + (Defense * W_def)
+    # Como tu Defensa ajustada es mejor cuanto más BAJA es (menos goles recibe), 
+    # tenemos que invertirla para el Power Score (1 / Defense)
+    
+    df_lab = df_strengths.copy()
+    
+    # Invertimos la defensa de forma segura para que "número más alto = mejor"
+    df_lab['Inverted_Defense'] = 1.0 / df_lab['Adjusted_Defense'].replace(0, 0.01)
+    
+    # Calculamos el Power Score
+    df_lab['Power_Score'] = (df_lab['Adjusted_Attack'] * off_weight) + (df_lab['Inverted_Defense'] * def_weight)
+    
+    # Limpiamos y ordenamos el Top 10
+    df_lab = df_lab.sort_values('Power_Score', ascending=False).reset_index(drop=True)
+    df_lab.index += 1 # Para que el ranking empiece en 1 y no en 0
+    
+    # 3. Visualización Corporativa
+    st.markdown("### 🏆 Top 10 Deterministic Favorites")
+    st.markdown("*Based on your selected algorithmic weights.*")
+    
+    st.dataframe(
+        df_lab[['Team', 'Adjusted_Attack', 'Adjusted_Defense', 'Power_Score']].head(10)
+        .style
+        .format({
+            'Adjusted_Attack': "{:.2f}", 
+            'Adjusted_Defense': "{:.2f}", 
+            'Power_Score': "{:.3f}"
+        })
+        .background_gradient(cmap='Greens', subset=['Power_Score']),
+        use_container_width=True
+    )
+
+
+
+    
