@@ -15,7 +15,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS para sacar la vibra de "casino"
+# Estilos CSS
 st.markdown("""
     <style>
     .stTabs [data-baseweb="tab-list"] { gap: 20px; }
