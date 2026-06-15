@@ -28,13 +28,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Estilos CSS
-#st.markdown("""
-#    <style>
-#    .stTabs [data-baseweb="tab-list"] { gap: 20px; }
-#    .stTabs [data-baseweb="tab"] { height: 50px; white-space: pre-wrap; font-weight: bold; }
-#    </style>
-#""", unsafe_allow_html=True)
 
 st.title("⚽ FIFA World Cup 2026: Strategic Data Lab")
 st.markdown("""
@@ -333,7 +326,6 @@ with tab4:
     st.divider()
 
     # 2. Extracción de Fuerzas y Cálculo de xG (Lambdas)
-    # Usamos las métricas históricas puras que exportamos desde Colab
     stats_a = df_strengths[df_strengths['Team'] == team_a].iloc[0]
     stats_b = df_strengths[df_strengths['Team'] == team_b].iloc[0]
 
@@ -343,7 +335,7 @@ with tab4:
     lambda_a = GLOBAL_AVG_GOALS * stats_a['Historical_Attack'] * stats_b['Historical_Defense']
     lambda_b = GLOBAL_AVG_GOALS * stats_b['Historical_Attack'] * stats_a['Historical_Defense']
 
-    # 3. Construcción de la Matriz de Poisson (0 a 5 goles para no saturar el gráfico)
+    # 3. Construcción de la Matriz de Poisson (0 a 5 goles)
     max_goals = 5
     goals = np.arange(max_goals + 1)
     
@@ -384,8 +376,8 @@ with tab4:
         fig_heat.update_layout(
             xaxis_title=f"Goals {team_b}",
             yaxis_title=f"Goals {team_a}",
-            yaxis_autorange='reversed', # Para que el 0-0 quede arriba a la izquierda como es estándar
-            template="plotly_white",
+            yaxis_autorange='reversed', # Para que el 0-0 quede arriba a la izquierda
+            template="plotly_dark", # Cambiado a Dark (o white si no usaste el CSS oscuro)
             margin=dict(l=20, r=20, t=30, b=20)
         )
         
@@ -401,7 +393,7 @@ with tab4:
         
         # Aplanar la matriz para buscar los extremos
         flat_probs = prob_matrix.flatten()
-        sorted_indices = np.argsort(flat_probs)[::-1] # Ordenar de mayor a menor probabilidad
+        sorted_indices = np.argsort(flat_probs)[::-1]
         
         st.markdown("### 🔝 Most Likely Scores")
         for i in range(5):
@@ -453,35 +445,38 @@ with tab5:
         y="Historical_Defense",
         size="Market_Value",
         hover_name="Team",
-        color="Historical_Attack", # Degradado estético basado en ataque
-        color_continuous_scale="RdYlGn_r", # Rojo a verde invertido (para mejor visualización)
+        color="Historical_Attack", 
+        color_continuous_scale="RdYlGn_r", 
         title="Team Strength Profile vs Market Value",
         labels={
             "Historical_Attack": "Historical Attack Strength (Higher = Better)",
             "Historical_Defense": "Historical Defense Strength (Lower = Better)"
         },
-        template="plotly_white"
+        template="plotly_dark" # Cambiado a Dark (o white si no usaste el CSS oscuro)
     )
     
-    # REGLA DE ORO DE BI: Invertir el eje Y de defensa porque "número más bajo es mejor"
-    # De esta forma, "Arriba a la derecha" siempre es el cuadrante de élite.
+    # Invertir el eje Y de defensa porque "número más bajo es mejor"
     fig_scatter.update_yaxes(autorange="reversed")    
     
     # Añadir las líneas punteadas que dividen los 4 cuadrantes tácticos
     fig_scatter.add_vline(x=mean_att, line_width=1.5, line_dash="dash", line_color="gray")
     fig_scatter.add_hline(y=mean_def, line_width=1.5, line_dash="dash", line_color="gray")
     
-    # Quitar la barra de color lateral para mantener el look corporativo limpio
+    # Quitar la barra de color lateral
     fig_scatter.update_layout(coloraxis_showscale=False)
     
     st.plotly_chart(fig_scatter, use_container_width=True)
     
-    # Explicativo técnico de los cuadrantes en formato corporativo
+    # EL ARREGLO CRÍTICO: Uso de """ para strings multilínea en Streamlit
     col_ed1, col_ed2, col_ed3, col_ed4 = st.columns(4)
-    col_ed1.info("**Upper Right: Elite**\\nHigh scoring power combined with a highly compact defense.")
-    col_ed2.warning("**Lower Right: Attacking Focus**\\nHigh scoring metrics but structurally vulnerable at the back.")
-    col_ed3.success("**Upper Left: Defensive Wall**\\nImpenetrable defensive setup but lacks clinical finishing.")
-    col_ed4.error("**Lower Left: Underdogs**\\nSub-average baseline metrics across both phases.")
+    col_ed1.info("""**Upper Right: Elite**
+    High scoring power combined with a highly compact defense.""")
+    col_ed2.warning("""**Lower Right: Attacking Focus**
+    High scoring metrics but structurally vulnerable at the back.""")
+    col_ed3.success("""**Upper Left: Defensive Wall**
+    Impenetrable defensive setup but lacks clinical finishing.""")
+    col_ed4.error("""**Lower Left: Underdogs**
+    Sub-average baseline metrics across both phases.""")
     
     st.divider()
 
@@ -492,16 +487,15 @@ with tab5:
     st.write("Instead of looking at raw singular percentages, this Treemap segments the 48 nations into distinct competitive tiers based on their objective probability of winning the World Cup.")
     
     # Procesamos df_probs para armar los Tiers
-# Procesamos df_probs para armar los Tiers
     df_tiers = df_probs[['Win World Cup']].reset_index().rename(columns={'index': 'Team'})
     
-# 1. Encontrar el techo dinámico (El equipo con mayor probabilidad)
+    # 1. Encontrar el techo dinámico
     max_prob = df_tiers['Win World Cup'].max()
     
-    # 2. Definir los cortes dinámicos (Ajustados empíricamente a la varianza del modelo)
-    t1_threshold = max_prob * 0.60  # Atrapa el cluster superior (hasta Portugal)
-    t2_threshold = max_prob * 0.33  # Atrapa el segundo pelotón (hasta Costa de Marfil)
-    t3_threshold = 0.50             # Corte absoluto para filtrar el ruido estadístico
+    # 2. Definir los cortes dinámicos
+    t1_threshold = max_prob * 0.60  
+    t2_threshold = max_prob * 0.33  
+    t3_threshold = 0.50             
     
     # 3. Función de categorización
     def assign_tier_category_dynamic(prob):
@@ -519,7 +513,7 @@ with tab5:
     # Construcción del Treemap interactivo
     fig_tree = px.treemap(
         df_tiers,
-        path=['Tier', 'Team'], # Define la jerarquía: primero agrupa por Tier, adentro muestra Equipos
+        path=['Tier', 'Team'], 
         values='Win World Cup',
         color='Win World Cup',
         color_continuous_scale='Blues',
@@ -529,7 +523,7 @@ with tab5:
     
     fig_tree.update_layout(
         margin=dict(t=30, l=10, r=10, b=10),
-        template="plotly_white"
+        template="plotly_dark" # Cambiado a Dark (o white si no usaste el CSS oscuro)
     )
     
     st.plotly_chart(fig_tree, use_container_width=True)
