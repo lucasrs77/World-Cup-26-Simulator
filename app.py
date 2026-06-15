@@ -482,22 +482,22 @@ with tab5:
 # Procesamos df_probs para armar los Tiers
     df_tiers = df_probs[['Win World Cup']].reset_index().rename(columns={'index': 'Team'})
     
-    # 1. Encontrar el techo dinámico (El equipo con mayor probabilidad)
+# 1. Encontrar el techo dinámico (El equipo con mayor probabilidad)
     max_prob = df_tiers['Win World Cup'].max()
     
-    # 2. Definir los cortes dinámicos (Natural Breaks basados en el techo)
-    t1_threshold = max_prob * 0.70  # 70% del poder del máximo favorito
-    t2_threshold = max_prob * 0.30  # 30% del poder del máximo favorito
-    t3_threshold = max_prob * 0.05  # 5% del poder del máximo favorito
+    # 2. Definir los cortes dinámicos (Ajustados empíricamente a la varianza del modelo)
+    t1_threshold = max_prob * 0.60  # Atrapa el cluster superior (hasta Portugal)
+    t2_threshold = max_prob * 0.33  # Atrapa el segundo pelotón (hasta Costa de Marfil)
+    t3_threshold = 0.50             # Corte absoluto para filtrar el ruido estadístico
     
-    # 3. Función de categorización dinámica
+    # 3. Función de categorización
     def assign_tier_category_dynamic(prob):
         if prob >= t1_threshold:
-            return f"Tier 1: Heavy Favorites (>= {t1_threshold:.1f}%)"
+            return f"Tier 1: Title Contenders (>= {t1_threshold:.1f}%)"
         elif prob >= t2_threshold:
-            return f"Tier 2: Strong Contenders (>= {t2_threshold:.1f}%)"
+            return f"Tier 2: Strong Dark Horses (>= {t2_threshold:.1f}%)"
         elif prob >= t3_threshold:
-            return f"Tier 3: Dark Horses (>= {t3_threshold:.1f}%)"
+            return f"Tier 3: Knockout Hopefuls (>= {t3_threshold:.1f}%)"
         else:
             return f"Tier 4: The Underdogs (< {t3_threshold:.1f}%)"
             
