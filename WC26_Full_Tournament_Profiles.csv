@@ -1,104 +1,104 @@
 Match_ID,Stage,Match,Logical_Score,Logical_Prob_%,Unexpected_Score,Unexpected_Prob_%
-1,Group Stage,Mexico vs South Africa,1 - 0,14.12,3 - 4,0.11
-2,Group Stage,Mexico vs South Korea,1 - 1,14.12,0 - 5,0.1
-3,Group Stage,Mexico vs Czech Republic,1 - 1,13.91,1 - 5,0.11
-4,Group Stage,South Africa vs South Korea,1 - 1,12.92,1 - 6,0.13
-5,Group Stage,South Africa vs Czech Republic,1 - 1,13.07,5 - 1,0.11
-6,Group Stage,South Korea vs Czech Republic,1 - 1,13.81,2 - 5,0.1
-7,Group Stage,Canada vs Bosnia and Herzegovina,1 - 0,17.93,0 - 4,0.13
-8,Group Stage,Canada vs Qatar,1 - 0,14.26,6 - 2,0.11
-9,Group Stage,Canada vs Switzerland,1 - 1,14.1,3 - 4,0.1
-10,Group Stage,Bosnia and Herzegovina vs Qatar,1 - 1,12.9,6 - 1,0.13
-11,Group Stage,Bosnia and Herzegovina vs Switzerland,0 - 1,15.47,4 - 0,0.12
-12,Group Stage,Qatar vs Switzerland,0 - 2,12.7,2 - 7,0.11
-13,Group Stage,Brazil vs Morocco,0 - 0,18.87,0 - 5,0.14
-14,Group Stage,Brazil vs Haiti,2 - 0,14.38,7 - 1,0.11
-15,Group Stage,Brazil vs Scotland,1 - 0,14.87,2 - 4,0.12
-16,Group Stage,Morocco vs Haiti,1 - 0,18.1,0 - 3,0.14
-17,Group Stage,Morocco vs Scotland,1 - 0,19.09,5 - 2,0.14
-18,Group Stage,Haiti vs Scotland,1 - 1,13.63,5 - 0,0.11
-19,Group Stage,United States vs Paraguay,1 - 0,16.8,2 - 4,0.12
-20,Group Stage,United States vs Australia,1 - 0,15.16,4 - 3,0.14
-21,Group Stage,United States vs Turkey,1 - 1,13.66,5 - 2,0.14
-22,Group Stage,Paraguay vs Australia,0 - 0,18.47,4 - 2,0.15
-23,Group Stage,Paraguay vs Turkey,0 - 1,15.87,0 - 6,0.1
-24,Group Stage,Australia vs Turkey,0 - 1,14.17,4 - 3,0.1
-25,Group Stage,Germany vs Curaçao,2 - 0,12.72,0 - 3,0.12
-26,Group Stage,Germany vs Ivory Coast,1 - 1,13.95,2 - 5,0.1
-27,Group Stage,Germany vs Ecuador,1 - 0,14.62,4 - 3,0.11
-28,Group Stage,Curaçao vs Ivory Coast,0 - 2,16.68,3 - 4,0.12
-29,Group Stage,Curaçao vs Ecuador,0 - 1,18.79,2 - 5,0.15
-30,Group Stage,Ivory Coast vs Ecuador,0 - 0,21.52,4 - 2,0.13
-31,Group Stage,Netherlands vs Japan,1 - 1,14.07,0 - 5,0.1
-32,Group Stage,Netherlands vs Sweden,1 - 1,12.09,6 - 2,0.1
-33,Group Stage,Netherlands vs Tunisia,1 - 0,15.34,2 - 4,0.11
-34,Group Stage,Japan vs Sweden,1 - 0,13.54,3 - 4,0.12
-35,Group Stage,Japan vs Tunisia,1 - 0,18.2,1 - 4,0.11
-36,Group Stage,Sweden vs Tunisia,1 - 0,13.68,3 - 4,0.12
-37,Group Stage,Belgium vs Egypt,1 - 0,16.45,4 - 3,0.1
-38,Group Stage,Belgium vs Iran,2 - 0,12.22,7 - 1,0.1
-39,Group Stage,Belgium vs New Zealand,2 - 0,16.07,0 - 3,0.12
-40,Group Stage,Egypt vs Iran,1 - 1,13.79,3 - 4,0.11
-41,Group Stage,Egypt vs New Zealand,1 - 0,18.11,6 - 1,0.12
-42,Group Stage,Iran vs New Zealand,1 - 0,12.87,3 - 4,0.14
-43,Group Stage,Spain vs Cape Verde,2 - 0,15.27,0 - 3,0.15
-44,Group Stage,Spain vs Saudi Arabia,2 - 0,15.57,4 - 3,0.16
-45,Group Stage,Spain vs Uruguay,1 - 0,17.35,2 - 4,0.11
-46,Group Stage,Cape Verde vs Saudi Arabia,1 - 1,13.89,3 - 4,0.1
-47,Group Stage,Cape Verde vs Uruguay,0 - 1,19.27,0 - 6,0.12
-48,Group Stage,Saudi Arabia vs Uruguay,0 - 1,19.9,2 - 5,0.11
-49,Group Stage,France vs Senegal,1 - 0,15.31,5 - 1,0.17
-50,Group Stage,France vs Iraq,2 - 0,14.37,5 - 3,0.11
-51,Group Stage,France vs Norway,1 - 1,13.41,3 - 4,0.13
-52,Group Stage,Senegal vs Iraq,2 - 0,17.26,0 - 3,0.12
-53,Group Stage,Senegal vs Norway,0 - 0,16.37,5 - 1,0.1
-54,Group Stage,Iraq vs Norway,0 - 2,15.27,3 - 0,0.16
-55,Group Stage,Argentina vs Algeria,1 - 0,19.11,0 - 4,0.11
-56,Group Stage,Argentina vs Austria,1 - 0,19.42,6 - 0,0.15
-57,Group Stage,Argentina vs Jordan,2 - 0,14.93,7 - 2,0.12
-58,Group Stage,Algeria vs Austria,1 - 0,15.28,4 - 3,0.1
-59,Group Stage,Algeria vs Jordan,2 - 0,13.56,7 - 2,0.11
-60,Group Stage,Austria vs Jordan,2 - 0,11.87,3 - 4,0.16
-61,Group Stage,Portugal vs DR Congo,1 - 0,19.03,6 - 0,0.14
-62,Group Stage,Portugal vs Uzbekistan,1 - 0,14.97,2 - 4,0.12
-63,Group Stage,Portugal vs Colombia,1 - 0,14.34,5 - 2,0.15
-64,Group Stage,DR Congo vs Uzbekistan,0 - 0,18.32,2 - 4,0.15
-65,Group Stage,DR Congo vs Colombia,0 - 0,18.04,1 - 5,0.13
-66,Group Stage,Uzbekistan vs Colombia,0 - 1,14.79,2 - 5,0.14
-67,Group Stage,England vs Croatia,1 - 0,16.7,1 - 4,0.12
-68,Group Stage,England vs Ghana,1 - 0,19.12,5 - 2,0.15
-69,Group Stage,England vs Panama,2 - 0,15.39,4 - 3,0.16
-70,Group Stage,Croatia vs Ghana,1 - 0,15.4,4 - 3,0.11
-71,Group Stage,Croatia vs Panama,2 - 0,11.99,7 - 1,0.11
-72,Group Stage,Ghana vs Panama,1 - 0,13.58,6 - 0,0.11
-73,Round of 32,Mexico vs Austria,1 - 1,14.2,4 - 3,0.1
-74,Round of 32,Canada vs Scotland,1 - 0,14.6,4 - 3,0.1
-75,Round of 32,Paraguay vs Iran,1 - 1,14.19,3 - 4,0.11
-76,Round of 32,Ivory Coast vs Sweden,1 - 0,14.22,3 - 4,0.1
-77,Round of 32,Belgium vs Morocco,0 - 1,17.66,4 - 0,0.16
-78,Round of 32,Uruguay vs Senegal,0 - 0,22.42,3 - 3,0.11
-79,Round of 32,Algeria vs England,0 - 1,17.35,4 - 2,0.11
-80,Round of 32,Uzbekistan vs Croatia,1 - 1,13.69,4 - 3,0.12
-81,Round of 32,Switzerland vs Bosnia and Herzegovina,1 - 0,15.47,0 - 4,0.12
-82,Round of 32,Brazil vs Turkey,1 - 1,13.18,6 - 1,0.1
-83,Round of 32,Ecuador vs Germany,0 - 1,14.62,3 - 4,0.11
-84,Round of 32,Japan vs DR Congo,1 - 0,19.34,0 - 4,0.1
-85,Round of 32,Spain vs South Korea,1 - 0,13.5,7 - 0,0.1
-86,Round of 32,France vs United States,1 - 0,13.61,3 - 4,0.11
-87,Round of 32,Portugal vs Egypt,1 - 0,17.25,4 - 3,0.1
-88,Round of 32,Ghana vs Argentina,0 - 1,21.17,3 - 3,0.1
-89,Round of 16,Austria vs Canada,0 - 0,15.77,5 - 1,0.12
-90,Round of 16,Paraguay vs Ivory Coast,0 - 1,20.12,3 - 3,0.15
-91,Round of 16,Belgium vs Senegal,0 - 0,15.74,1 - 5,0.11
-92,Round of 16,Algeria vs Uzbekistan,1 - 0,16.52,4 - 3,0.11
-93,Round of 16,Switzerland vs Brazil,0 - 1,13.84,1 - 6,0.1
-94,Round of 16,Ecuador vs DR Congo,0 - 0,24.93,1 - 4,0.1
-95,Round of 16,South Korea vs France,0 - 1,13.88,4 - 2,0.15
-96,Round of 16,Portugal vs Argentina,0 - 0,16.64,4 - 2,0.13
-97,Quarterfinals,Canada vs Ivory Coast,0 - 1,18.08,4 - 0,0.14
-98,Quarterfinals,Belgium vs Algeria,1 - 1,14.2,4 - 3,0.1
-99,Quarterfinals,Brazil vs Ecuador,0 - 0,18.53,5 - 1,0.13
-100,Quarterfinals,France vs Argentina,0 - 0,16.32,1 - 5,0.12
-101,Semifinals,Ivory Coast vs Algeria,0 - 0,17.07,4 - 2,0.18
-102,Semifinals,Ecuador vs Argentina,0 - 1,22.64,1 - 5,0.13
-103,Final,Algeria vs Argentina,0 - 1,19.11,4 - 0,0.11
+1,Group Stage,Mexico vs South Africa,0 - 0,24.58,5 - 0,0.14
+2,Group Stage,Mexico vs South Korea,0 - 0,28.49,0 - 4,0.13
+3,Group Stage,Mexico vs Czech Republic,0 - 0,27.2,0 - 4,0.13
+4,Group Stage,South Africa vs South Korea,0 - 0,22.95,0 - 5,0.13
+5,Group Stage,South Africa vs Czech Republic,0 - 0,21.96,2 - 4,0.11
+6,Group Stage,South Korea vs Czech Republic,0 - 0,24.92,1 - 4,0.15
+7,Group Stage,Canada vs Bosnia and Herzegovina,0 - 0,30.96,2 - 3,0.12
+8,Group Stage,Canada vs Qatar,1 - 0,24.66,6 - 0,0.1
+9,Group Stage,Canada vs Switzerland,0 - 0,29.07,4 - 0,0.11
+10,Group Stage,Bosnia and Herzegovina vs Qatar,1 - 0,22.25,5 - 1,0.12
+11,Group Stage,Bosnia and Herzegovina vs Switzerland,0 - 0,25.1,0 - 5,0.13
+12,Group Stage,Qatar vs Switzerland,0 - 1,22.09,3 - 3,0.1
+13,Group Stage,Brazil vs Morocco,0 - 0,33.13,3 - 2,0.13
+14,Group Stage,Brazil vs Haiti,1 - 0,25.43,2 - 3,0.11
+15,Group Stage,Brazil vs Scotland,1 - 0,25.21,2 - 3,0.13
+16,Group Stage,Morocco vs Haiti,1 - 0,27.83,5 - 1,0.13
+17,Group Stage,Morocco vs Scotland,0 - 0,27.84,1 - 3,0.14
+18,Group Stage,Haiti vs Scotland,0 - 0,24.44,4 - 0,0.1
+19,Group Stage,United States vs Paraguay,0 - 0,29.11,2 - 3,0.12
+20,Group Stage,United States vs Australia,0 - 0,24.81,5 - 0,0.12
+21,Group Stage,United States vs Turkey,0 - 0,23.75,1 - 4,0.18
+22,Group Stage,Paraguay vs Australia,0 - 0,32.47,0 - 4,0.12
+23,Group Stage,Paraguay vs Turkey,0 - 0,28.04,3 - 2,0.14
+24,Group Stage,Australia vs Turkey,0 - 0,23.77,0 - 5,0.14
+25,Group Stage,Germany vs Curaçao,1 - 0,20.5,2 - 3,0.11
+26,Group Stage,Germany vs Ivory Coast,0 - 0,26.25,1 - 4,0.11
+27,Group Stage,Germany vs Ecuador,0 - 0,28.81,2 - 3,0.15
+28,Group Stage,Curaçao vs Ivory Coast,0 - 1,25.9,2 - 4,0.13
+29,Group Stage,Curaçao vs Ecuador,0 - 1,27.41,3 - 0,0.1
+30,Group Stage,Ivory Coast vs Ecuador,0 - 0,37.02,4 - 0,0.15
+31,Group Stage,Netherlands vs Japan,0 - 0,27.55,0 - 4,0.11
+32,Group Stage,Netherlands vs Sweden,0 - 0,22.68,4 - 2,0.1
+33,Group Stage,Netherlands vs Tunisia,1 - 0,26.29,5 - 1,0.13
+34,Group Stage,Japan vs Sweden,0 - 0,27.22,0 - 4,0.11
+35,Group Stage,Japan vs Tunisia,0 - 0,27.97,5 - 0,0.15
+36,Group Stage,Sweden vs Tunisia,0 - 0,25.77,5 - 0,0.12
+37,Group Stage,Belgium vs Egypt,0 - 0,28.28,5 - 0,0.1
+38,Group Stage,Belgium vs Iran,1 - 0,23.64,6 - 0,0.13
+39,Group Stage,Belgium vs New Zealand,1 - 0,25.68,4 - 2,0.14
+40,Group Stage,Egypt vs Iran,0 - 0,24.54,2 - 3,0.24
+41,Group Stage,Egypt vs New Zealand,0 - 0,26.55,5 - 0,0.17
+42,Group Stage,Iran vs New Zealand,1 - 0,21.3,3 - 3,0.1
+43,Group Stage,Spain vs Cape Verde,1 - 0,25.21,4 - 2,0.15
+44,Group Stage,Spain vs Saudi Arabia,1 - 0,24.13,6 - 1,0.13
+45,Group Stage,Spain vs Uruguay,0 - 0,30.64,3 - 2,0.18
+46,Group Stage,Cape Verde vs Saudi Arabia,0 - 0,27.15,0 - 4,0.11
+47,Group Stage,Cape Verde vs Uruguay,0 - 0,29.85,0 - 5,0.12
+48,Group Stage,Saudi Arabia vs Uruguay,0 - 1,28.12,3 - 1,0.1
+49,Group Stage,France vs Senegal,0 - 0,31.09,2 - 3,0.12
+50,Group Stage,France vs Iraq,2 - 0,21.16,4 - 2,0.23
+51,Group Stage,France vs Norway,0 - 0,25.85,2 - 3,0.2
+52,Group Stage,Senegal vs Iraq,1 - 0,26.88,4 - 2,0.1
+53,Group Stage,Senegal vs Norway,0 - 0,32.99,0 - 4,0.11
+54,Group Stage,Iraq vs Norway,0 - 1,24.21,3 - 1,0.1
+55,Group Stage,Argentina vs Algeria,0 - 0,34.02,4 - 1,0.13
+56,Group Stage,Argentina vs Austria,0 - 0,29.82,5 - 0,0.12
+57,Group Stage,Argentina vs Jordan,1 - 0,22.24,4 - 2,0.18
+58,Group Stage,Algeria vs Austria,0 - 0,29.73,4 - 1,0.14
+59,Group Stage,Algeria vs Jordan,1 - 0,23.51,6 - 1,0.1
+60,Group Stage,Austria vs Jordan,1 - 0,22.7,3 - 3,0.1
+61,Group Stage,Portugal vs DR Congo,0 - 0,28.31,5 - 0,0.15
+62,Group Stage,Portugal vs Uzbekistan,1 - 0,26.08,2 - 3,0.11
+63,Group Stage,Portugal vs Colombia,0 - 0,27.03,2 - 3,0.16
+64,Group Stage,DR Congo vs Uzbekistan,0 - 0,33.78,2 - 3,0.11
+65,Group Stage,DR Congo vs Colombia,0 - 0,33.65,1 - 4,0.11
+66,Group Stage,Uzbekistan vs Colombia,0 - 0,28.11,3 - 2,0.14
+67,Group Stage,England vs Croatia,0 - 0,26.8,2 - 3,0.1
+68,Group Stage,England vs Ghana,1 - 0,28.16,1 - 3,0.1
+69,Group Stage,England vs Panama,1 - 0,23.03,6 - 1,0.17
+70,Group Stage,Croatia vs Ghana,0 - 0,30.07,2 - 3,0.14
+71,Group Stage,Croatia vs Panama,1 - 0,23.97,6 - 0,0.11
+72,Group Stage,Ghana vs Panama,1 - 0,23.59,5 - 0,0.16
+73,Round of 32,Mexico vs United States,0 - 0,27.77,4 - 0,0.13
+74,Round of 32,Switzerland vs Scotland,0 - 0,24.93,2 - 3,0.24
+75,Round of 32,Turkey vs Canada,0 - 0,28.02,0 - 4,0.1
+76,Round of 32,Germany vs Japan,0 - 0,24.95,1 - 4,0.1
+77,Round of 32,Belgium vs France,0 - 0,25.37,3 - 2,0.21
+78,Round of 32,Uruguay vs Norway,0 - 0,34.03,3 - 2,0.1
+79,Round of 32,Argentina vs Sweden,0 - 0,27.63,5 - 0,0.15
+80,Round of 32,Colombia vs Ghana,0 - 0,31.15,2 - 3,0.12
+81,Round of 32,Qatar vs Brazil,0 - 1,20.29,2 - 5,0.12
+82,Round of 32,Morocco vs Panama,1 - 0,26.12,4 - 2,0.12
+83,Round of 32,Ecuador vs Ivory Coast,0 - 0,37.02,0 - 4,0.15
+84,Round of 32,Netherlands vs Austria,0 - 0,24.8,5 - 0,0.1
+85,Round of 32,Spain vs Czech Republic,1 - 0,24.66,4 - 2,0.14
+86,Round of 32,Senegal vs Paraguay,0 - 0,33.47,1 - 3,0.12
+87,Round of 32,DR Congo vs Iran,0 - 0,26.67,2 - 3,0.19
+88,Round of 32,England vs Algeria,0 - 0,30.61,3 - 2,0.19
+89,Round of 16,United States vs Switzerland,0 - 0,24.58,1 - 4,0.14
+90,Round of 16,Turkey vs Japan,0 - 0,27.0,4 - 0,0.14
+91,Round of 16,Belgium vs Norway,0 - 0,27.44,4 - 1,0.12
+92,Round of 16,Argentina vs Ghana,0 - 0,29.98,3 - 2,0.14
+93,Round of 16,Qatar vs Morocco,0 - 1,23.43,1 - 6,0.16
+94,Round of 16,Ecuador vs Netherlands,0 - 0,31.49,3 - 2,0.12
+95,Round of 16,Spain vs Senegal,0 - 0,30.77,2 - 3,0.13
+96,Round of 16,DR Congo vs England,0 - 0,29.09,2 - 3,0.15
+97,Quarterfinals,United States vs Turkey,0 - 0,23.75,1 - 4,0.18
+98,Quarterfinals,Norway vs Ghana,0 - 0,28.38,5 - 0,0.1
+99,Quarterfinals,Morocco vs Netherlands,0 - 0,31.28,4 - 1,0.11
+100,Quarterfinals,Senegal vs England,0 - 0,34.58,1 - 4,0.11
+101,Semifinals,Turkey vs Norway,0 - 0,24.81,4 - 0,0.12
+102,Semifinals,Morocco vs England,0 - 0,35.89,2 - 3,0.11
+103,Final,Norway vs England,0 - 0,29.22,3 - 2,0.13
