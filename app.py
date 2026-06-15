@@ -479,21 +479,29 @@ with tab5:
     st.write("Instead of looking at raw singular percentages, this Treemap segments the 48 nations into distinct competitive tiers based on their objective probability of winning the World Cup.")
     
     # Procesamos df_probs para armar los Tiers
+# Procesamos df_probs para armar los Tiers
     df_tiers = df_probs[['Win World Cup']].reset_index().rename(columns={'index': 'Team'})
     
-    # Función para categorizar los equipos según su probabilidad de salir campeón
-
-    def assign_tier_category(prob):
-        if prob >= 6.5: # El nuevo corte de élite absoluta
-            return "Tier 1: Heavy Favorites (>= 6.5%)"
-        elif prob >= 2.5: # Equipos fuertes que si tienen un buen cruce llegan
-            return "Tier 2: Strong Contenders (2.5% - 6.5%)"
-        elif prob >= 0.5: # Pasan de fase pero chocan con el muro
-            return "Tier 3: Dark Horses (0.5% - 2.5%)"
-        else: # Los turistas
-            return "Tier 4: The Underdogs (< 0.5%)"
+    # 1. Encontrar el techo dinámico (El equipo con mayor probabilidad)
+    max_prob = df_tiers['Win World Cup'].max()
+    
+    # 2. Definir los cortes dinámicos (Natural Breaks basados en el techo)
+    t1_threshold = max_prob * 0.70  # 70% del poder del máximo favorito
+    t2_threshold = max_prob * 0.30  # 30% del poder del máximo favorito
+    t3_threshold = max_prob * 0.05  # 5% del poder del máximo favorito
+    
+    # 3. Función de categorización dinámica
+    def assign_tier_category_dynamic(prob):
+        if prob >= t1_threshold:
+            return f"Tier 1: Heavy Favorites (>= {t1_threshold:.1f}%)"
+        elif prob >= t2_threshold:
+            return f"Tier 2: Strong Contenders (>= {t2_threshold:.1f}%)"
+        elif prob >= t3_threshold:
+            return f"Tier 3: Dark Horses (>= {t3_threshold:.1f}%)"
+        else:
+            return f"Tier 4: The Underdogs (< {t3_threshold:.1f}%)"
             
-    df_tiers['Tier'] = df_tiers['Win World Cup'].apply(assign_tier_category)
+    df_tiers['Tier'] = df_tiers['Win World Cup'].apply(assign_tier_category_dynamic)
     
     # Construcción del Treemap interactivo
     fig_tree = px.treemap(
