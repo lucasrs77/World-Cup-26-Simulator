@@ -502,7 +502,7 @@ with tab5:
         if prob >= t1_threshold:
             return f"Tier 1: Title Contenders (>= {t1_threshold:.1f}%)"
         elif prob >= t2_threshold:
-            return f"Tier 2: Strong Dark Horses (>= {t2_threshold:.1f}%)"
+            return f"Tier 2: Strong Contenders (>= {t2_threshold:.1f}%)"
         elif prob >= t3_threshold:
             return f"Tier 3: Knockout Hopefuls (>= {t3_threshold:.1f}%)"
         else:
