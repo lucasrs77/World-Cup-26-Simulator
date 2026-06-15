@@ -110,6 +110,8 @@ with tab1:
         st.warning("Please select at least one team.")
     else:
         df_filtered = df_melted[df_melted['Team'].isin(selected_teams)]
+        # Checkbox estratégico para hacer zoom en la cola de la distribución
+        use_log_scale = st.checkbox("🔍 Use Logarithmic Scale (Zoom in on Final/Win probabilities)")
         
         # 4. Gráfico Plotly
         fig_survival = px.line(
@@ -123,9 +125,18 @@ with tab1:
             template="plotly_white"
         )
         
-        fig_survival.update_traces(line=dict(width=3), marker=dict(size=8))
+        # Aplicamos suavizado 'spline' para curvar las líneas elegantemente
+        fig_survival.update_traces(line=dict(width=3, shape='spline'), marker=dict(size=8))
+        
+        # Ajuste dinámico del Eje Y
+        if use_log_scale:
+            # Escala logarítmica para separar los valores pequeños
+            fig_survival.update_layout(yaxis_type="log", yaxis_title="Likelihood (%) - Log Scale")
+        else:
+            # Rango normal, bajando el piso a -2 para que la línea del 0% no quede cortada por el borde
+            fig_survival.update_layout(yaxis=dict(range=[-2, 105], title_font=dict(size=14)))
+            
         fig_survival.update_layout(
-            yaxis=dict(range=[0, 105], title_font=dict(size=14)),
             xaxis=dict(title="", tickfont=dict(size=12)),
             legend_title_text='National Team',
             hovermode="x unified"
@@ -176,31 +187,6 @@ with tab2:
     )
     
     st.plotly_chart(fig_vol, use_container_width=True)
-
-    '''
-    # 3. Inspector de Grupos Corregido (Sin Score y con Decimales formateados)
-    st.markdown("### 🔍 Inspect Group Matches")
-    st.markdown("*Note: This table strips away the noise and displays pure win/draw/loss probability distributions. Groups saturated with deep red across multiple matches indicate a high-variance 'Group of Death' scenario.*")
-    
-    selected_group = st.selectbox("Select a Group to see its internal match probabilities:", df_volatility['Group'].unique())
-    
-    df_group_matches = df_groups[df_groups['Group'] == selected_group][
-        ['Team_A', 'Team_B', 'Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']
-    ]
-    
-    # Formateo corporativo: 1 decimal, agrega el %, y pinta la matriz
-    st.dataframe(
-        df_group_matches.style
-        .format({
-            'Prob_Win_A_%': "{:.1f}%", 
-            'Prob_Draw_%': "{:.1f}%", 
-            'Prob_Win_B_%': "{:.1f}%"
-        })
-        .background_gradient(cmap='Reds', subset=['Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']),
-        use_container_width=True,
-        hide_index=True
-    )
-    '''
 
 # ==============================================================================
 # TAB 3: THE ALGORITHM LAB (DETERMINISTIC ENGINE)
