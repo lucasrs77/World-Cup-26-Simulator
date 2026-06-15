@@ -130,3 +130,64 @@ with tab1:
                 df_probs.loc[selected_teams, stages[1:]].style.format("{:.1f}%")
                .background_gradient(cmap='Blues', axis=1)
             )
+
+
+
+
+# ==============================================================================
+# TAB 2: GROUP VOLATILITY (THE 'GROUP OF DEATH' FINDER)
+# ==============================================================================
+with tab2:
+    st.subheader("Group Volatility Index (The 'Group of Death' Finder)")
+    st.write("By calculating the average statistical certainty of match outcomes within each group, we can identify which groups are highly predictable and which are absolute bloodbaths.")
+    
+    # 1. Feature Engineering en vivo: Calcular la previsibilidad del grupo
+    # La "certidumbre" de un partido es el valor máximo entre las prob de Local, Empate o Visitante
+    df_groups['Max_Prob'] = df_groups[['Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']].max(axis=1)
+    
+    # Promediamos la certidumbre por grupo
+    df_volatility = df_groups.groupby('Group')['Max_Prob'].mean().reset_index()
+    df_volatility.rename(columns={'Max_Prob': 'Predictability_Score'}, inplace=True)
+    
+    # 2. Invertir la escala para tener "Volatilidad" (100 - Previsibilidad)
+    # A mayor número, más caos y menos favoritos claros.
+    df_volatility['Volatility_Index'] = 100 - df_volatility['Predictability_Score']
+    
+    # Ordenar del más caótico al más predecible
+    df_volatility = df_volatility.sort_values('Volatility_Index', ascending=False).reset_index(drop=True)
+    
+    # 3. Gráfico de Barras Horizontales con Plotly
+    fig_vol = px.bar(
+        df_volatility, 
+        x='Volatility_Index', 
+        y='Group', 
+        orientation='h',
+        title="Group Volatility Ranking",
+        color='Volatility_Index',
+        color_continuous_scale='Reds',
+        text_auto='.1f'
+    )
+    
+    fig_vol.update_layout(
+        yaxis={'categoryorder': 'total ascending'},
+        xaxis_title="Volatility Index (Higher = More Chaos)",
+        yaxis_title="Group",
+        coloraxis_showscale=False,
+        template="plotly_white"
+    )
+    
+    st.plotly_chart(fig_vol, use_container_width=True)
+    
+    # 4. Inspector de Grupos (Para ver por qué un grupo es tan volátil)
+    st.markdown("### Inspect Group Matches")
+    selected_group = st.selectbox("Select a Group to see its internal match probabilities:", df_volatility['Group'].unique())
+    
+    df_group_matches = df_groups[df_groups['Group'] == selected_group][
+        ['Team_A', 'Team_B', 'Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%', 'Most_Likely_Score']
+    ]
+    
+    st.dataframe(
+        df_group_matches.style.background_gradient(cmap='Reds', subset=['Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']),
+        use_container_width=True,
+        hide_index=True
+    )
