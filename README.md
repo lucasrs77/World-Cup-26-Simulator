@@ -1,6 +1,6 @@
 # ⚽ FIFA World Cup 2026: Data Analysis & Monte Carlo Simulator
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)]([https://world-cup-26-simulator.streamlit.app/])
+[![Streamlit App]([https://world-cup-26-simulator.streamlit.app/])
 
 An end-to-end data science pipeline and interactive web application that simulates the expanded 48-team FIFA World Cup 2026. This project moves beyond simple win/loss predictions to provide a rigorous, probabilistic breakdown of the tournament's landscape using applied statistics.
 
