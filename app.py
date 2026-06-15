@@ -98,7 +98,8 @@ with tab1:
     
     with col1:
         all_groups = sorted(list(set(team_groups.values())))
-        selected_groups = st.multiselect("Filter by Group (Optional):", options=all_groups)
+        # AGREGADO: key="sb_groups" para que Streamlit no se maree con la memoria
+        selected_groups = st.multiselect("Filter by Group (Optional):", options=all_groups, key="sb_groups")
     
     # Si seleccionó grupos, filtramos la lista de equipos disponibles. Si no, mostramos todos.
     if selected_groups:
@@ -107,14 +108,19 @@ with tab1:
         available_teams = sorted(list(team_groups.keys()))
         
     with col2:
+        # ARREGLO CRÍTICO: Forzamos una lista nueva limpia para el default
+        default_selection = [t for t in available_teams[:4]] if available_teams else []
+        
+        # AGREGADO: key="sb_teams" y el nuevo default
         selected_teams = st.multiselect(
             "Select Teams to compare:",
             options=available_teams,
-            default=available_teams[:4] if available_teams else []
-        ) # Límite de 8 removido
+            default=default_selection,
+            key="sb_teams"
+        ) 
     
     if not selected_teams:
-        st.warning("Please select at least one team.")
+        st.warning("⚠️ Please select at least one team.")
     else:
         df_filtered = df_melted[df_melted['Team'].isin(selected_teams)]
         # Checkbox estratégico para hacer zoom en la cola de la distribución
