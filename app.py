@@ -206,51 +206,72 @@ with tab2:
 # ==============================================================================
 with tab3:
     st.subheader("The Algorithm Lab: Deterministic Power Rankings")
-    st.write("Football philosophy debate: What wins World Cups, an elite attack or an impenetrable defense? Adjust the strategic weights below to recalculate the deterministic 'Power Score' for each nation in real-time.")
+    st.write("Play God with the simulation variables. Adjust strategic weights and environmental factors to see how the mathematical hierarchy of the tournament shifts in real-time.")
 
-    # 1. Controles de Laboratorio (Sliders)
-    st.markdown("### ⚙️ Strategic Weighting")
+    col_a, col_b = st.columns(2)
     
-    # El usuario elige cuánto pesa el ataque. La defensa es el resto (1 - ataque)
-    off_weight = st.slider("Offensive Importance Weight (%)", min_value=0.0, max_value=1.0, value=0.50, step=0.05)
-    def_weight = 1.0 - off_weight
+    with col_a:
+        st.markdown("### ⚙️ Tactical Philosophy")
+        off_weight = st.slider(
+            "Offensive Importance Weight (%)", 
+            min_value=0.0, max_value=1.0, value=0.50, step=0.05,
+            help="At 100%, defense is ignored. At 0%, attack is ignored."
+        )
+        def_weight = 1.0 - off_weight
+        
+        st.markdown("### 🎲 The Chaos Factor")
+        chaos_factor = st.slider(
+            "Underdog Competitiveness Multiplier", 
+            min_value=1.0, max_value=2.0, value=1.0, step=0.1,
+            help="Values > 1.0 mathematically compress the skill gap, buffing weaker teams and simulating a highly volatile tournament."
+        )
+
+    with col_b:
+        st.markdown("### 🌎 Environmental Boosts")
+        americas_boost = st.slider(
+            "Americas Home Advantage Boost (%)", 
+            min_value=0.0, max_value=20.0, value=5.0, step=1.0,
+            help="Stat multiplier applied to CONMEBOL/CONCACAF teams due to climate and travel familiarity."
+        )
+        
+        # Lista hardcodeada de equipos americanos más probables para aplicar el boost rápido
+        americas_teams = ['Argentina', 'Brazil', 'Uruguay', 'Colombia', 'Ecuador', 
+                          'USA', 'Mexico', 'Canada', 'Peru', 'Chile', 'Venezuela', 
+                          'Paraguay', 'Costa Rica', 'Panama', 'Jamaica']
     
-    st.markdown(f"**Current Algorithm Philosophy:** {off_weight*100:.0f}% Attack Focus / {def_weight*100:.0f}% Defense Focus")
     st.divider()
 
-    # 2. Motor Determinístico en Vivo
-    # Formula: Power = (Attack * W_off) + (Defense * W_def)
-    # Como tu Defensa ajustada es mejor cuanto más BAJA es (menos goles recibe), 
-    # tenemos que invertirla para el Power Score (1 / Defense)
-    
+    # 1. Calculamos el Power Score base
     df_lab = df_strengths.copy()
-    
-    # Invertimos la defensa de forma segura para que "número más alto = mejor"
     df_lab['Inverted_Defense'] = 1.0 / df_lab['Adjusted_Defense'].replace(0, 0.01)
+    df_lab['Base_Power'] = (df_lab['Adjusted_Attack'] * off_weight) + (df_lab['Inverted_Defense'] * def_weight)
     
-    # Calculamos el Power Score
-    df_lab['Power_Score'] = (df_lab['Adjusted_Attack'] * off_weight) + (df_lab['Inverted_Defense'] * def_weight)
+    # 2. Aplicamos el Boost de Localía (Americas)
+    boost_multiplier = 1.0 + (americas_boost / 100.0)
+    df_lab['Power_Score'] = np.where(
+        df_lab['Team'].isin(americas_teams), 
+        df_lab['Base_Power'] * boost_multiplier, 
+        df_lab['Base_Power']
+    )
+    
+    # 3. Aplicamos el Factor Caos (Raíz matemática para comprimir la brecha)
+    # Ejemplo: Si caos es 2.0, aplicamos raíz cuadrada. Los números altos bajan más que los bajos.
+    df_lab['Power_Score'] = df_lab['Power_Score'] ** (1.0 / chaos_factor)
     
     # Limpiamos y ordenamos el Top 10
     df_lab = df_lab.sort_values('Power_Score', ascending=False).reset_index(drop=True)
-    df_lab.index += 1 # Para que el ranking empiece en 1 y no en 0
+    df_lab.index += 1 
     
-    # 3. Visualización Corporativa
-    st.markdown("### 🏆 Top 10 Deterministic Favorites")
-    st.markdown("*Based on your selected algorithmic weights.*")
+    # Visualización Corporativa
+    st.markdown(f"### 🏆 Top 10 Adjusted Power Rankings")
     
     st.dataframe(
-        df_lab[['Team', 'Adjusted_Attack', 'Adjusted_Defense', 'Power_Score']].head(10)
+        df_lab[['Team', 'Power_Score']].head(10)
         .style
-        .format({
-            'Adjusted_Attack': "{:.2f}", 
-            'Adjusted_Defense': "{:.2f}", 
-            'Power_Score': "{:.3f}"
-        })
+        .format({'Power_Score': "{:.3f}"})
         .background_gradient(cmap='Greens', subset=['Power_Score']),
         use_container_width=True
     )
-
 
 
     
