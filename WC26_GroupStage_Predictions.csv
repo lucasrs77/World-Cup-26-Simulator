@@ -1,73 +1,73 @@
 Match_ID,Group,Team_A,Team_B,Prob_Win_A_%,Prob_Draw_%,Prob_Win_B_%,Most_Likely_Score,Score_Probability_%
-1,A,Mexico,South Africa,51.9,27.6,20.4,1 - 0,14.1
-2,A,Mexico,South Korea,37.2,31.0,31.8,1 - 1,14.1
-3,A,Mexico,Czech Republic,40.7,30.1,29.2,1 - 1,13.9
-4,A,South Africa,South Korea,22.7,27.4,49.9,1 - 1,12.9
-5,A,South Africa,Czech Republic,25.4,27.5,47.1,1 - 1,13.1
-6,A,South Korea,Czech Republic,38.4,29.3,32.3,1 - 1,13.8
-7,B,Canada,Bosnia and Herzegovina,47.4,32.2,20.5,1 - 0,17.9
-8,B,Canada,Qatar,66.2,22.0,11.7,1 - 0,14.3
-9,B,Canada,Switzerland,29.5,31.9,38.6,1 - 1,14.1
-10,B,Bosnia and Herzegovina,Qatar,50.2,27.4,22.4,1 - 1,12.9
-11,B,Bosnia and Herzegovina,Switzerland,17.3,27.1,55.6,0 - 1,15.5
-12,B,Qatar,Switzerland,8.6,16.4,75.0,0 - 2,12.7
-13,C,Brazil,Morocco,25.3,34.9,39.9,0 - 0,18.9
-14,C,Brazil,Haiti,68.4,21.0,10.6,2 - 0,14.4
-15,C,Brazil,Scotland,62.1,24.1,13.8,1 - 0,14.9
-16,C,Morocco,Haiti,71.7,20.8,7.5,1 - 0,18.1
-17,C,Morocco,Scotland,66.0,24.2,9.8,1 - 0,19.1
-18,C,Haiti,Scotland,29.7,28.9,41.4,1 - 1,13.6
-19,D,United States,Paraguay,48.6,30.8,20.6,1 - 0,16.8
-20,D,United States,Australia,49.1,29.4,21.5,1 - 0,15.2
-21,D,United States,Turkey,34.8,28.8,36.4,1 - 1,13.7
-22,D,Paraguay,Australia,31.6,35.1,33.4,0 - 0,18.5
-23,D,Paraguay,Turkey,20.2,29.4,50.5,0 - 1,15.9
-24,D,Australia,Turkey,21.1,28.0,50.9,0 - 1,14.2
-25,E,Germany,Curaçao,83.1,11.9,5.0,2 - 0,12.7
-26,E,Germany,Ivory Coast,35.7,29.8,34.5,1 - 1,14.0
-27,E,Germany,Ecuador,42.2,31.4,26.5,1 - 0,14.6
-28,E,Curaçao,Ivory Coast,6.2,17.0,76.8,0 - 2,16.7
-29,E,Curaçao,Ecuador,9.7,23.7,66.6,0 - 1,18.8
-30,E,Ivory Coast,Ecuador,37.9,36.7,25.4,0 - 0,21.5
-31,F,Netherlands,Japan,38.0,30.7,31.3,1 - 1,14.1
-32,F,Netherlands,Sweden,53.3,25.4,21.3,1 - 1,12.1
-33,F,Netherlands,Tunisia,62.6,24.1,13.3,1 - 0,15.3
-34,F,Japan,Sweden,47.1,28.9,24.0,1 - 0,13.5
-35,F,Japan,Tunisia,56.0,28.5,15.5,1 - 0,18.2
-36,F,Sweden,Tunisia,47.0,29.0,24.0,1 - 0,13.7
-37,G,Belgium,Egypt,49.7,30.1,20.2,1 - 0,16.4
-38,G,Belgium,Iran,63.6,22.2,14.2,2 - 0,12.2
-39,G,Belgium,New Zealand,78.6,15.6,5.8,2 - 0,16.1
-40,G,Egypt,Iran,43.2,30.1,26.7,1 - 1,13.8
-41,G,Egypt,New Zealand,59.9,26.7,13.4,1 - 0,18.1
-42,G,Iran,New Zealand,55.9,25.5,18.6,1 - 0,12.9
-43,H,Spain,Cape Verde,77.5,16.0,6.5,2 - 0,15.3
-44,H,Spain,Saudi Arabia,83.4,12.4,4.2,2 - 0,15.6
-45,H,Spain,Uruguay,49.0,31.0,20.0,1 - 0,17.4
-46,H,Cape Verde,Saudi Arabia,42.1,30.6,27.3,1 - 1,13.9
-47,H,Cape Verde,Uruguay,15.0,29.4,55.5,0 - 1,19.3
-48,H,Saudi Arabia,Uruguay,11.1,26.3,62.6,0 - 1,19.9
-49,I,France,Senegal,41.4,32.3,26.4,1 - 0,15.3
-50,I,France,Iraq,86.6,10.1,3.3,2 - 0,14.4
-51,I,France,Norway,46.6,28.9,24.5,1 - 1,13.4
-52,I,Senegal,Iraq,76.1,17.7,6.2,2 - 0,17.3
-53,I,Senegal,Norway,35.8,33.6,30.6,0 - 0,16.4
-54,I,Iraq,Norway,6.7,16.2,77.1,0 - 2,15.3
-55,J,Argentina,Algeria,46.6,33.5,19.9,1 - 0,19.1
-56,J,Argentina,Austria,57.7,28.5,13.9,1 - 0,19.4
-57,J,Argentina,Jordan,87.5,9.6,2.9,2 - 0,14.9
-58,J,Algeria,Austria,43.7,31.4,24.9,1 - 0,15.3
-59,J,Algeria,Jordan,77.6,15.3,7.1,2 - 0,13.6
-60,J,Austria,Jordan,68.7,19.3,12.0,2 - 0,11.9
-61,K,Portugal,DR Congo,56.4,28.9,14.8,1 - 0,19.0
-62,K,Portugal,Uzbekistan,62.8,23.9,13.4,1 - 0,15.0
-63,K,Portugal,Colombia,48.4,29.0,22.6,1 - 0,14.3
-64,K,DR Congo,Uzbekistan,34.2,34.9,30.9,0 - 0,18.3
-65,K,DR Congo,Colombia,23.4,34.0,42.6,0 - 0,18.0
-66,K,Uzbekistan,Colombia,22.6,29.6,47.8,0 - 1,14.8
-67,L,England,Croatia,59.4,26.2,14.4,1 - 0,16.7
-68,L,England,Ghana,67.8,23.3,9.0,1 - 0,19.1
-69,L,England,Panama,84.3,11.8,3.9,2 - 0,15.4
-70,L,Croatia,Ghana,45.2,31.0,23.8,1 - 0,15.4
-71,L,Croatia,Panama,63.7,22.0,14.3,2 - 0,12.0
-72,L,Ghana,Panama,48.5,28.5,23.1,1 - 0,13.6
+1,A,Mexico,South Africa,46.2,35.8,18.0,0 - 0,24.6
+2,A,Mexico,South Korea,32.7,40.1,27.3,0 - 0,28.5
+3,A,Mexico,Czech Republic,34.0,39.1,26.9,0 - 0,27.2
+4,A,South Africa,South Korea,20.5,35.2,44.3,0 - 0,23.0
+5,A,South Africa,Czech Republic,21.3,34.6,44.0,0 - 0,22.0
+6,A,South Korea,Czech Republic,32.0,37.7,30.3,0 - 0,24.9
+7,B,Canada,Bosnia and Herzegovina,37.9,41.2,20.9,0 - 0,31.0
+8,B,Canada,Qatar,58.9,29.1,12.0,1 - 0,24.7
+9,B,Canada,Switzerland,26.0,40.4,33.6,0 - 0,29.1
+10,B,Bosnia and Herzegovina,Qatar,48.6,32.5,18.8,1 - 0,22.3
+11,B,Bosnia and Herzegovina,Switzerland,18.6,36.4,45.0,0 - 0,25.1
+12,B,Qatar,Switzerland,9.6,23.1,67.3,0 - 1,22.1
+13,C,Brazil,Morocco,26.1,43.3,30.6,0 - 0,33.1
+14,C,Brazil,Haiti,62.7,27.5,9.8,1 - 0,25.4
+15,C,Brazil,Scotland,51.9,33.6,14.4,1 - 0,25.2
+16,C,Morocco,Haiti,61.2,30.1,8.7,1 - 0,27.8
+17,C,Morocco,Scotland,50.8,36.6,12.6,0 - 0,27.8
+18,C,Haiti,Scotland,23.5,36.8,39.7,0 - 0,24.4
+19,D,United States,Paraguay,41.4,39.5,19.0,0 - 0,29.1
+20,D,United States,Australia,44.5,36.3,19.2,0 - 0,24.8
+21,D,United States,Turkey,31.7,36.9,31.4,0 - 0,23.8
+22,D,Paraguay,Australia,29.1,42.9,27.9,0 - 0,32.5
+23,D,Paraguay,Turkey,19.3,38.8,41.9,0 - 0,28.0
+24,D,Australia,Turkey,19.4,35.6,45.0,0 - 0,23.8
+25,E,Germany,Curaçao,77.0,17.4,5.6,1 - 0,20.5
+26,E,Germany,Ivory Coast,33.8,38.5,27.7,0 - 0,26.2
+27,E,Germany,Ecuador,38.2,39.8,22.0,0 - 0,28.8
+28,E,Curaçao,Ivory Coast,7.3,24.8,67.9,0 - 1,25.9
+29,E,Curaçao,Ecuador,9.8,31.2,59.0,0 - 1,27.4
+30,E,Ivory Coast,Ecuador,31.6,46.0,22.5,0 - 0,37.0
+31,F,Netherlands,Japan,35.3,39.3,25.4,0 - 0,27.5
+32,F,Netherlands,Sweden,43.4,35.2,21.4,0 - 0,22.7
+33,F,Netherlands,Tunisia,56.9,31.5,11.6,1 - 0,26.3
+34,F,Japan,Sweden,35.9,39.0,25.1,0 - 0,27.2
+35,F,Japan,Tunisia,48.4,37.3,14.3,0 - 0,28.0
+36,F,Sweden,Tunisia,44.8,36.8,18.4,0 - 0,25.8
+37,G,Belgium,Egypt,44.2,38.5,17.3,0 - 0,28.3
+38,G,Belgium,Iran,60.2,27.7,12.2,1 - 0,23.6
+39,G,Belgium,New Zealand,69.0,24.0,7.0,1 - 0,25.7
+40,G,Egypt,Iran,40.2,36.8,23.0,0 - 0,24.5
+41,G,Egypt,New Zealand,49.4,36.2,14.4,0 - 0,26.6
+42,G,Iran,New Zealand,44.7,33.7,21.6,1 - 0,21.3
+43,H,Spain,Cape Verde,69.7,23.4,6.9,1 - 0,25.2
+44,H,Spain,Saudi Arabia,75.3,19.7,5.0,1 - 0,24.1
+45,H,Spain,Uruguay,42.3,40.3,17.4,0 - 0,30.6
+46,H,Cape Verde,Saudi Arabia,35.8,39.0,25.2,0 - 0,27.1
+47,H,Cape Verde,Uruguay,13.7,38.6,47.6,0 - 0,29.9
+48,H,Saudi Arabia,Uruguay,10.9,35.8,53.4,0 - 1,28.1
+49,I,France,Senegal,36.5,41.5,22.0,0 - 0,31.1
+50,I,France,Iraq,81.4,14.9,3.7,2 - 0,21.2
+51,I,France,Norway,40.0,37.7,22.4,0 - 0,25.9
+52,I,Senegal,Iraq,68.2,25.1,6.6,1 - 0,26.9
+53,I,Senegal,Norway,29.1,43.3,27.6,0 - 0,33.0
+54,I,Iraq,Norway,6.7,22.0,71.3,0 - 1,24.2
+55,J,Argentina,Algeria,39.7,42.9,17.4,0 - 0,34.0
+56,J,Argentina,Austria,47.2,38.7,14.1,0 - 0,29.8
+57,J,Argentina,Jordan,79.8,16.4,3.8,1 - 0,22.2
+58,J,Algeria,Austria,35.1,40.7,24.1,0 - 0,29.7
+59,J,Algeria,Jordan,68.1,23.4,8.5,1 - 0,23.5
+60,J,Austria,Jordan,62.5,25.9,11.6,1 - 0,22.7
+61,K,Portugal,DR Congo,49.0,37.4,13.7,0 - 0,28.3
+62,K,Portugal,Uzbekistan,55.9,31.9,12.1,1 - 0,26.1
+63,K,Portugal,Colombia,41.7,38.2,20.2,0 - 0,27.0
+64,K,DR Congo,Uzbekistan,30.9,43.8,25.4,0 - 0,33.8
+65,K,DR Congo,Colombia,20.7,43.3,36.0,0 - 0,33.7
+66,K,Uzbekistan,Colombia,19.3,38.8,41.9,0 - 0,28.1
+67,L,England,Croatia,48.6,36.6,14.8,0 - 0,26.8
+68,L,England,Ghana,55.1,34.5,10.4,1 - 0,28.2
+69,L,England,Panama,77.5,18.0,4.5,1 - 0,23.0
+70,L,Croatia,Ghana,36.8,40.8,22.4,0 - 0,30.1
+71,L,Croatia,Panama,58.4,28.8,12.8,1 - 0,24.0
+72,L,Ghana,Panama,46.9,35.0,18.0,1 - 0,23.6
