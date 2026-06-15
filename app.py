@@ -66,16 +66,11 @@ with tab1:
     st.subheader("Tournament Survival Curve")
     st.write("Analyze the probability decay of teams advancing through the knockout stages.")
     
-    # 1. Preprocesar los datos para Plotly (Formato Largo / Melt)
-    # df_probs tiene los equipos en el índice. Lo pasamos a columna.
+    # 1. Preprocesar los datos
     df_probs_reset = df_probs.reset_index().rename(columns={'index': 'Team'})
-    
-    # Agregamos la fase inicial (100% de entrar al torneo) para que el gráfico empiece arriba
     df_probs_reset.insert(1, 'Start', 100.0)
-    
     stages = ['Start', 'Make R32', 'Make R16', 'Make QF', 'Make SF', 'Make Final', 'Win World Cup']
     
-    # Melt: Transforma las columnas de fases en filas
     df_melted = df_probs_reset.melt(
         id_vars=['Team'], 
         value_vars=stages,
@@ -83,25 +78,39 @@ with tab1:
         value_name='Probability'
     )
     
-    # 2. Selector de Equipos interactivo
-    # Por defecto, ponemos algunos potentes para que el gráfico no esté vacío
-    default_teams = ['Argentina', 'France', 'England', 'Morocco']
-    all_teams = df_probs_reset['Team'].tolist()
+    # 2. Diccionario de Grupos para el Filtro
+    # Extraemos a qué grupo pertenece cada equipo leyendo los partidos
+    team_groups = pd.concat([
+        df_groups[['Team_A', 'Group']].rename(columns={'Team_A': 'Team'}),
+        df_groups[['Team_B', 'Group']].rename(columns={'Team_B': 'Team'})
+    ]).drop_duplicates().set_index('Team')['Group'].to_dict()
     
-    selected_teams = st.multiselect(
-        "Select Teams to compare survival paths:",
-        options=all_teams,
-        default=default_teams,
-        max_selections=8
-    )
+    # 3. Filtros Interactivos (Grupo y Equipos)
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        all_groups = sorted(list(set(team_groups.values())))
+        selected_groups = st.multiselect("Filter by Group (Optional):", options=all_groups)
+    
+    # Si seleccionó grupos, filtramos la lista de equipos disponibles. Si no, mostramos todos.
+    if selected_groups:
+        available_teams = sorted([t for t, g in team_groups.items() if g in selected_groups])
+    else:
+        available_teams = sorted(list(team_groups.keys()))
+        
+    with col2:
+        selected_teams = st.multiselect(
+            "Select Teams to compare:",
+            options=available_teams,
+            default=available_teams[:4] if available_teams else []
+        ) # Límite de 8 removido
     
     if not selected_teams:
         st.warning("Please select at least one team.")
     else:
-        # Filtrar datos
         df_filtered = df_melted[df_melted['Team'].isin(selected_teams)]
         
-        # 3. Construir el gráfico Plotly
+        # 4. Gráfico Plotly
         fig_survival = px.line(
             df_filtered, 
             x='Stage', 
@@ -113,7 +122,6 @@ with tab1:
             template="plotly_white"
         )
         
-        # Ajustes estéticos corporativos
         fig_survival.update_traces(line=dict(width=3), marker=dict(size=8))
         fig_survival.update_layout(
             yaxis=dict(range=[0, 105], title_font=dict(size=14)),
@@ -124,14 +132,12 @@ with tab1:
         
         st.plotly_chart(fig_survival, use_container_width=True)
         
-        # 4. Tabla de datos crudos (opcional pero muy útil)
         with st.expander("Show raw probability matrix"):
             st.dataframe(
                 df_probs.loc[selected_teams, stages[1:]].style.format("{:.1f}%")
-               .background_gradient(cmap='Blues', axis=1)
+               .background_gradient(cmap='Blues', axis=1),
+               use_container_width=True
             )
-
-
 
 
 # ==============================================================================
@@ -141,22 +147,14 @@ with tab2:
     st.subheader("Group Volatility Index (The 'Group of Death' Finder)")
     st.write("By calculating the average statistical certainty of match outcomes within each group, we can identify which groups are highly predictable and which are absolute bloodbaths.")
     
-    # 1. Feature Engineering en vivo: Calcular la previsibilidad del grupo
-    # La "certidumbre" de un partido es el valor máximo entre las prob de Local, Empate o Visitante
+    # 1. Feature Engineering
     df_groups['Max_Prob'] = df_groups[['Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']].max(axis=1)
-    
-    # Promediamos la certidumbre por grupo
     df_volatility = df_groups.groupby('Group')['Max_Prob'].mean().reset_index()
     df_volatility.rename(columns={'Max_Prob': 'Predictability_Score'}, inplace=True)
-    
-    # 2. Invertir la escala para tener "Volatilidad" (100 - Previsibilidad)
-    # A mayor número, más caos y menos favoritos claros.
     df_volatility['Volatility_Index'] = 100 - df_volatility['Predictability_Score']
-    
-    # Ordenar del más caótico al más predecible
     df_volatility = df_volatility.sort_values('Volatility_Index', ascending=False).reset_index(drop=True)
     
-    # 3. Gráfico de Barras Horizontales con Plotly
+    # 2. Gráfico
     fig_vol = px.bar(
         df_volatility, 
         x='Volatility_Index', 
@@ -178,16 +176,25 @@ with tab2:
     
     st.plotly_chart(fig_vol, use_container_width=True)
     
-    # 4. Inspector de Grupos (Para ver por qué un grupo es tan volátil)
-    st.markdown("### Inspect Group Matches")
+    # 3. Inspector de Grupos Corregido (Sin Score y con Decimales formateados)
+    st.markdown("### 🔍 Inspect Group Matches")
+    st.markdown("*Note: This table strips away the noise and displays pure win/draw/loss probability distributions. Groups saturated with deep red across multiple matches indicate a high-variance 'Group of Death' scenario.*")
+    
     selected_group = st.selectbox("Select a Group to see its internal match probabilities:", df_volatility['Group'].unique())
     
     df_group_matches = df_groups[df_groups['Group'] == selected_group][
-        ['Team_A', 'Team_B', 'Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%', 'Most_Likely_Score']
+        ['Team_A', 'Team_B', 'Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']
     ]
     
+    # Formateo corporativo: 1 decimal, agrega el %, y pinta la matriz
     st.dataframe(
-        df_group_matches.style.background_gradient(cmap='Reds', subset=['Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']),
+        df_group_matches.style
+        .format({
+            'Prob_Win_A_%': "{:.1f}%", 
+            'Prob_Draw_%': "{:.1f}%", 
+            'Prob_Win_B_%': "{:.1f}%"
+        })
+        .background_gradient(cmap='Reds', subset=['Prob_Win_A_%', 'Prob_Draw_%', 'Prob_Win_B_%']),
         use_container_width=True,
         hide_index=True
     )
