@@ -452,7 +452,7 @@ with tab5:
     
     # REGLA DE ORO DE BI: Invertir el eje Y de defensa porque "número más bajo es mejor"
     # De esta forma, "Arriba a la derecha" siempre es el cuadrante de élite.
-    fig_scatter.update_yaxis(autorange="reversed")
+    fig_scatter.update_yaxes(autorange="reversed")    
     
     # Añadir las líneas punteadas que dividen los 4 cuadrantes tácticos
     fig_scatter.add_vline(x=mean_att, line_width=1.5, line_dash="dash", line_color="gray")
